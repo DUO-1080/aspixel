@@ -1,0 +1,20 @@
+{
+  "name": "aspixel",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@simonwep/pickr": "^1.8.0",
+    "vue": "^3.0.4",
+    "vuex": "^4.0.0-rc.2"
+  },
+  "devDependencies": {
+    "@vue/compiler-sfc": "^3.0.4",
+    "autoprefixer": "^9.8.6",
+    "postcss": "^7.0.35",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.1",
+    "vite": "^1.0.0-rc.13"
+  }
+}
