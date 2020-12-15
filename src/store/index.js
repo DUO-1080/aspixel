@@ -6,7 +6,6 @@ export default createStore({
   },
   mutations: {
     setColor: (state, color) => {
-      console.log('state change: ', color);
       state.currentColor = color;
     }
   },

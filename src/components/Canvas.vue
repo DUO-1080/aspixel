@@ -109,7 +109,6 @@ export default {
       y -= rect.top;
       lastX.value = Math.floor(x / (pixelLength * (zoom)));
       lastY.value = Math.floor(y / (pixelLength * (zoom)));
-      console.log('hover: ', x, y, store.state.currentColor);
     }
 
     function handleMouseLeave() {

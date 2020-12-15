@@ -1,6 +1,7 @@
 <template>
   <div class="flex w-screen h-screen">
-    <div class="w-80">
+    <div class="w-80 flex flex-col">
+      <Palette />
       <ColorPicker />
     </div>
     <div ref="right" class="flex-grow w-3/4 h-full border-blue-300 border overflow-auto" @wheel.prevent>
@@ -13,10 +14,12 @@
 import Canvas from './components/Canvas.vue';
 import {ref} from 'vue';
 import ColorPicker from './components/ColorPicker.vue';
+import Palette from './components/Palette.vue';
 
 export default {
   name: 'App',
   components: {
+    Palette,
     ColorPicker,
     Canvas,
   },

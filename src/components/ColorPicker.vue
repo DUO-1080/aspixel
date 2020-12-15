@@ -7,7 +7,7 @@
 
 <script>
 import {useStore} from 'vuex';
-import {onMounted, ref, watch} from 'vue';
+import {computed, onMounted, ref, watch} from 'vue';
 import Pickr from '@simonwep/pickr';
 import '@simonwep/pickr/dist/themes/nano.min.css';
 
@@ -15,16 +15,17 @@ export default {
   name: 'ColorPicker',
   setup() {
     const store = useStore();
-    const color = ref(store.state.currentColor);
+    const color = computed(() => store.state.currentColor);
+    let pickr;
 
     onMounted(() => {
-      const pickr = Pickr.create({
+      pickr = Pickr.create({
         el: '.color-picker',
         container: '#colorContainer',
         theme: 'nano', // or 'monolith', or 'nano'
 
         useAsButton: true,
-        default: null,
+        default: store.state.currentColor,
         swatches: null,
         showAlways: true,
 
@@ -49,6 +50,7 @@ export default {
         },
       });
 
+
       pickr.on('save', (color, instance) => {
         console.log('Event: "save"', color, instance);
 
@@ -58,9 +60,8 @@ export default {
       });
     });
 
-    watch(color, () => {
-      console.log('set color: ', color);
-      store.commit('setColor', color);
+    watch(color, (color) => {
+      pickr.setColor(color)
     });
 
     return {
