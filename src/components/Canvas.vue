@@ -117,7 +117,6 @@ export default {
     }
 
     function handleDraw() {
-      console.log('canvas click', lastX.value, lastY.value);
       const context = canvasRef.value.getContext('2d');
       context.fillStyle = store.state.currentColor;
       context.fillRect(lastX.value, lastY.value, 1, 1);

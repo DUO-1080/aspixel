@@ -52,16 +52,16 @@ export default {
 
 
       pickr.on('save', (color, instance) => {
-        console.log('Event: "save"', color, instance);
-
+        console.log('Event: "save"', color.toHEXA().toString().toLowerCase(), instance);
+        store.commit('setPalette', color.toHEXA().toString().toLowerCase())
       }).on('changestop', (source, instance) => {
-        console.log('Event: "changestop"', instance._color.toHEXA().toString());
-        store.commit('setColor', instance._color.toHEXA().toString());
+        console.log('Event: "changestop"', instance._color.toHEXA().toString().toLowerCase());
+        store.commit('setColor', instance._color.toHEXA().toString().toLowerCase());
       });
     });
 
     watch(color, (color) => {
-      pickr.setColor(color)
+      pickr.setColor(color, true)
     });
 
     return {
@@ -75,7 +75,6 @@ export default {
 .pcr-app {
   width: 100% !important;
   position: static !important;
-
 }
 
 </style>

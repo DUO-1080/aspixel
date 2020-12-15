@@ -2,13 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ef3198d1-6e89-49b9-b25d-167292b04f27" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/PresetPalettes.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Palette.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/PresetPalettes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/PresetPalettes.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Canvas.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Canvas.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/ColorPicker.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ColorPicker.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Palette.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Palette.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -24,6 +22,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1lamWqosmKtaIk5WhVNJJNG5osd" />
@@ -52,7 +55,7 @@
       <option name="presentableId" value="Default" />
       <updated>1607843628110</updated>
       <workItem from="1607843628112" duration="31286000" />
-      <workItem from="1607950362723" duration="18444000" />
+      <workItem from="1607950362723" duration="21697000" />
     </task>
     <servers />
   </component>
