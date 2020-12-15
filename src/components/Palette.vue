@@ -1,10 +1,13 @@
 <template>
-  <div class="flex-grow w-full bg-indigo-900 border border-black mb-3 shadow-inner rounded-sm" style="background-color: #655561">
+  <div class="flex-grow w-full bg-indigo-900 border border-black mb-3 shadow-inner rounded-sm"
+       style="background-color: #655561">
     <div class="flex flex-wrap">
-      <div class="palette-item w-9 h-9 relative cursor-pointer border border-black" v-for="color in currentPalette"
-           :style="{backgroundColor: color}" :key="color" @click="setCurrentColor(color)">
+      <div class="palette-item w-9 h-9 relative cursor-pointer border border-black"
+           v-for="(color, index) in currentPalette"
+           :style="{backgroundColor: color}" @mousemove="handleHover(color, index)" @mouseleave="handleLeave"
+           :key="color" @click="setCurrentColor(color)">
         <div v-if="currentColor.toLowerCase() === color"
-            class="selected-cover">
+             class="selected-cover">
         </div>
       </div>
     </div>
@@ -13,33 +16,32 @@
 </template>
 
 <script>
-import {computed, ref, watch} from 'vue';
+import {computed} from 'vue';
 import {useStore} from 'vuex';
 
 export default {
   name: 'Palette',
-  props: {
-
-  },
+  props: {},
   setup(props) {
     const store = useStore();
     const currentPalette = computed(() => store.state.currentPalette);
-    const currentColor
-        = computed(() => store.state.currentColor);
-
-    // watch(currentColor
-    //     , () => {
-    //       console.log('watch currentColor' +
-    //           ' change: ', currentColor.value);
-    //     });
+    const currentColor = computed(() => store.state.currentColor);
 
     const setCurrentColor = (color) => {
-      store.commit('setColor', color)
-    }
+      store.commit('setColor', color);
+    };
+
+    const handleHover = (color, index) => {
+      store.commit('setHoverPalette', {color, index});
+    };
+
+    const handleLeave = () => store.commit('setHoverPalette', {color: undefined, index: undefined});
     return {
       currentColor,
       currentPalette,
-      setCurrentColor
+      setCurrentColor,
+      handleHover,
+      handleLeave
     };
   },
 };
@@ -49,6 +51,7 @@ export default {
 .palette-item:hover {
   border: 1px solid white;
 }
+
 .selected-cover {
   z-index: 100;
   border: 3px solid white;

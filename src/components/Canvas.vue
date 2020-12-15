@@ -14,7 +14,7 @@
 
 <script>
 
-import {onMounted, ref, watch, computed} from 'vue';
+import {computed, onMounted, ref, watch} from 'vue';
 import {useStore} from 'vuex';
 
 export default {
@@ -29,10 +29,11 @@ export default {
     const canvasRef = ref();
     const foregroundRef = ref();
     const containerRef = ref();
+    const canvasSpec = store.state.canvasSpec;
     let pixelLength = 0;
     let lastX = ref(0);
     let lastY = ref(0);
-    let zoom = 1;
+    let zoom = computed(() => store.state.zoom);
     onMounted(() => {
       console.log(backgroundRef.value, canvasRef.value);
       measure(props.cw, props.ch);
@@ -54,18 +55,18 @@ export default {
     });
 
     function setupCanvas() {
-      backgroundRef.value.width = props.cw;
-      backgroundRef.value.height = props.ch;
-      canvasRef.value.width = props.cw;
-      canvasRef.value.height = props.ch;
-      foregroundRef.value.width = props.cw;
-      foregroundRef.value.height = props.ch;
+      backgroundRef.value.width = canvasSpec.w;
+      backgroundRef.value.height = canvasSpec.h;
+      canvasRef.value.width = canvasSpec.w;
+      canvasRef.value.height = canvasSpec.h;
+      foregroundRef.value.width = canvasSpec.w;
+      foregroundRef.value.height = canvasSpec.h;
     }
 
     function drawBg() {
       const context = backgroundRef.value.getContext('2d');
-      const w = props.cw;
-      const h = props.ch;
+      const w = canvasSpec.w;
+      const h = canvasSpec.h;
       for (let i = 0; i < w; i += 1) {
         for (let j = 0; j < h; j += 1) {
           if ((i + j) % 2 === 0) {
@@ -78,21 +79,21 @@ export default {
       }
     }
 
-    function measure(cw, ch) {
+    function measure(w, h) {
       const parent = containerRef.value.parentNode;
       const pr = parent.clientWidth / parent.clientHeight;
-      const cr = cw / ch;
+      const cr = w / h;
       let initW, initH;
       console.log('pr: ', pr, 'cr: ', cr);
       if (pr > 1 && cr > 1 || pr <= 1 && cr > 1) {
         initW = parent.clientWidth;
-        initH = (initW / cw) * ch;
+        initH = (initW / w) * h;
       } else if (pr <= 1 && cr <= 1 || pr > 1 && cr <= 1) {
         initH = parent.clientHeight;
-        initW = (initH / ch) * cw;
+        initW = (initH / h) * w;
       }
 
-      pixelLength = initW / cw;
+      pixelLength = initW / w;
 
       containerRef.value.style.width = initW + 'px';
       containerRef.value.style.height = initH + 'px';
@@ -107,13 +108,16 @@ export default {
       const rect = canvasRef.value.getBoundingClientRect();
       x -= rect.left;
       y -= rect.top;
-      lastX.value = Math.floor(x / (pixelLength * (zoom)));
-      lastY.value = Math.floor(y / (pixelLength * (zoom)));
+      lastX.value = Math.floor(x / (pixelLength * (zoom.value)));
+      lastY.value = Math.floor(y / (pixelLength * (zoom.value)));
+
+      store.commit('setPoint', {x: lastX.value, y: lastY.value});
     }
 
     function handleMouseLeave() {
       lastX.value = undefined;
       lastY.value = undefined;
+      store.commit('setPoint', {x: undefined, y: undefined});
     }
 
     function handleDraw() {
@@ -125,16 +129,20 @@ export default {
     function handleZoom(e) {
       const container = containerRef.value;
       const direction = e.deltaY < 0 ? 1 : -1;
-      zoom += direction;
-      if (zoom < 1) {
-        zoom = 1;
+
+      let z = zoom.value + direction;
+      if (z < 1) {
+        z = 1;
       }
-      container.style.height = `${pixelLength * props.ch * zoom}px`;
-      container.style.width = `${pixelLength * props.cw * zoom}px`;
+
+      store.commit('setZoom', z);
+
+      container.style.height = `${pixelLength * canvasSpec.h * z}px`;
+      container.style.width = `${pixelLength * canvasSpec.w * z}px`;
 
       const x = direction * lastX.value * pixelLength + container.parentElement.scrollLeft;
       const y = direction * lastY.value * pixelLength + container.parentElement.scrollTop;
-      context.emit('handleZoom', x, y)
+      context.emit('handleZoom', x, y);
 
       return false;
     }
@@ -155,7 +163,7 @@ export default {
       handleMouseLeave,
       handleDraw,
       handleZoom,
-      handleMove
+      handleMove,
     };
   },
 };

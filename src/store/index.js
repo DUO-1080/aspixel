@@ -5,6 +5,19 @@ export default createStore({
   state: {
     currentColor: '#ED7440',
     currentPalette: palettes[0].colors,
+    zoom: 1,
+    point: {
+      x: undefined,
+      y: undefined,
+    },
+    canvasSpec: {
+      w: 32,
+      h: 32,
+    },
+    hoverPalette: {
+      color: undefined,
+      index: undefined,
+    }
   },
   mutations: {
     setColor: (state, color) => {
@@ -19,6 +32,18 @@ export default createStore({
     initPalette: (state, palette) => {
       state.currentPalette = palette;
     },
+    setZoom: (state, zoom) => {
+      state.zoom = zoom;
+    },
+    setPoint: (state, point) => {
+      state.point = point;
+    },
+    setCanvasSpec: (state, canvasSpec) => {
+      state.canvasSpec = canvasSpec;
+    },
+    setHoverPalette: (state, hover) => {
+      state.hoverPalette = hover;
+    }
   },
   actions: {},
   modules: {},

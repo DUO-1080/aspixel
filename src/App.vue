@@ -13,7 +13,9 @@
         </div>
       </div>
     </div>
-    <div class="w-full h-8"></div>
+    <div class="w-full h-8">
+      <StatusBar />
+    </div>
   </div>
 </template>
 
@@ -22,15 +24,18 @@ import Canvas from './components/Canvas.vue';
 import {ref} from 'vue';
 import ColorPicker from './components/ColorPicker.vue';
 import Palette from './components/Palette.vue';
+import StatusBar from './components/StatusBar.vue';
 
 export default {
   name: 'App',
   components: {
+    StatusBar,
     Palette,
     ColorPicker,
     Canvas,
   },
   setup() {
+
     const right = ref();
 
     function handleZoom(x, y) {
