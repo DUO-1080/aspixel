@@ -1,5 +1,5 @@
 <template>
-  <div id="colorContainer" class="relative w-full">
+  <div id="colorContainer" class="relative w-full border border-black rounded-sm" >
     <div class="color-picker">
     </div>
   </div>

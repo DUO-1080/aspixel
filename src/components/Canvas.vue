@@ -1,6 +1,6 @@
 <template>
   <div id="container" ref="container" @wheel.prevent="handleZoom"
-       class="canvas-display canvas-container relative bg-blue-50 h-full flex justify-center items-center  mx-auto transition-transform">
+       class="canvas-display canvas-container border border-black relative h-full w-full flex justify-center items-center  mx-auto">
     <canvas id="background" ref="backgroundRef"
             class="canvas_display absolute top-0 left-0 w-full h-full z-10"></canvas>
     <canvas id="canvas" ref="canvasRef"

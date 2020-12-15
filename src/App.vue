@@ -1,12 +1,19 @@
 <template>
-  <div class="flex w-screen h-screen">
-    <div class="w-80 flex flex-col">
-      <Palette />
-      <ColorPicker />
+  <div class="flex flex-col w-screen h-screen" style="background-color: #7d929e">
+    <div class="w-full h-10"></div>
+    <div class="main flex flex-grow h-full">
+      <div class="w-80 flex flex-col mx-3">
+        <Palette/>
+        <ColorPicker/>
+      </div>
+      <div class="canvas overflow-auto h-full border p-0.5 bg-white border-black rounded-sm"
+           @wheel.prevent>
+        <div ref="right" class="h-full overflow-auto border border-black rounded-sm" style="background-color: #655561">
+          <Canvas @handleZoom="handleZoom" :ch="32" :cw="32"/>
+        </div>
+      </div>
     </div>
-    <div ref="right" class="flex-grow w-3/4 h-full border-blue-300 border overflow-auto" @wheel.prevent>
-      <Canvas @handleZoom="handleZoom" :ch="32" :cw="32"/>
-    </div>
+    <div class="w-full h-8"></div>
   </div>
 </template>
 
@@ -39,3 +46,14 @@ export default {
 
 };
 </script>
+
+<style scoped>
+.main {
+  height: calc(100% - 4.5rem);
+}
+
+.canvas {
+  width: calc(100% - 20rem);
+  height: 100%;
+}
+</style>

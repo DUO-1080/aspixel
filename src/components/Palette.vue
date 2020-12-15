@@ -1,7 +1,7 @@
 <template>
-  <div class="flex-grow w-full bg-indigo-900">
+  <div class="flex-grow w-full bg-indigo-900 border border-black mb-3 shadow-inner rounded-sm" style="background-color: #655561">
     <div class="flex flex-wrap">
-      <div class="palette-item w-8 h-8 relative cursor-pointer border border-black" v-for="color in currentPalette"
+      <div class="palette-item w-9 h-9 relative cursor-pointer border border-black" v-for="color in currentPalette"
            :style="{backgroundColor: color}" :key="color" @click="setCurrentColor(color)">
         <div v-if="currentColor.toLowerCase() === color"
             class="selected-cover">
@@ -13,7 +13,6 @@
 </template>
 
 <script>
-import palettes from '../assets/PresetPalettes';
 import {computed, ref, watch} from 'vue';
 import {useStore} from 'vuex';
 
