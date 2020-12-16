@@ -1,13 +1,13 @@
 <template>
-  <div class="flex items-center">
+  <div class="flex items-center mx-3 w-80">
     <div title="Options" @click="openOptions"
          class="border border-black rounded-sm p-0.5 bg-gray-300  mr-1 cursor-pointer">
       <img class="w-5 h-5 bg-gray-400 hover:bg-transparent" :src="optionsIcon" alt="">
       <ModalContainer :open="isOpenOptions" @close="closeOptions">
-        <div :style="{top: `${modalPosition.y + 4}px`, left: `${modalPosition.x}px`}"
+        <div :style="{top: `${modalPosition.y + 7}px`, left: `${modalPosition.x}px`}"
              class="absolute w-80 border border-black bg-gray-100 p-0.5 cursor-pointer">
           <div class="bg-gray-300 py-1">
-            <div  class="menu-item h-8 leading-8" @click="changePaletteSize(PaletteSize.small)">
+            <div class="menu-item h-8 leading-8" @click="changePaletteSize(PaletteSize.small)">
               <span class="w-6 inline-block"><span class="ml-2" v-show="paletteSize === PaletteSize.small">✓</span></span>
               {{ PaletteSize.small }}
             </div>
@@ -26,7 +26,7 @@
     <div title="Presets" @click="openPresets" class="border border-black rounded-sm p-0.5 bg-gray-300 cursor-pointer">
       <img class="w-5 h-5 bg-gray-400 hover:bg-transparent " :src="presetsIcon" alt="">
       <ModalContainer :open="isOpenPresets" @close="closePresets">
-        <div :style="{top: `${modalPosition.y + 4}px`, left: `${modalPosition.x}px`}"
+        <div :style="{top: `${modalPosition.y + 7}px`, left: `${modalPosition.x}px`}"
              class="absolute w-auto border border-black bg-gray-100 p-0.5 cursor-pointer">
           <div class="bg-gray-300 py-1">
             <PresetPaletteList />
@@ -61,8 +61,8 @@ export default {
     });
 
     const openPresets = (e) => {
-      console.log(e.target.parentElement.getBoundingClientRect().toJSON());
-      const rect = e.target.parentElement.getBoundingClientRect();
+      console.log(e.currentTarget);
+      const rect = e.currentTarget.getBoundingClientRect();
       modalPosition.value.x = rect.left;
       modalPosition.value.y = rect.bottom;
       isOpenPresets.value = true;
@@ -73,8 +73,8 @@ export default {
     };
 
     const openOptions = (e) => {
-      console.log(e.target.parentElement.getBoundingClientRect().toJSON());
-      const rect = e.target.parentElement.getBoundingClientRect();
+      console.log(e.currentTarget.getBoundingClientRect().toJSON());
+      const rect = e.currentTarget.getBoundingClientRect();
       modalPosition.value.x = rect.left;
       modalPosition.value.y = rect.bottom;
       isOpenOptions.value = true;
@@ -107,7 +107,5 @@ export default {
 </script>
 
 <style scoped>
-.menu-item:hover {
-  background-color: #7c909f;
-}
+
 </style>

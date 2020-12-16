@@ -1,9 +1,8 @@
 <template>
   <div class="flex flex-col w-screen h-screen" style="background-color: #7d929e">
-    <div class="w-full flex items-center h-10 ">
-      <div class="mx-3">
-        <PaletteTool />
-      </div>
+    <div class="w-full flex items-center h-10">
+      <PaletteTool/>
+      <Menu/>
     </div>
     <div class="main flex flex-grow h-full">
       <div class="w-80 flex flex-col mx-3">
@@ -18,7 +17,7 @@
       </div>
     </div>
     <div class="w-full h-8">
-      <StatusBar />
+      <StatusBar/>
     </div>
   </div>
 </template>
@@ -30,10 +29,12 @@ import ColorPicker from './components/ColorPicker.vue';
 import Palette from './components/Palette.vue';
 import StatusBar from './components/StatusBar.vue';
 import PaletteTool from './components/PaletteTool.vue';
+import Menu from './components/Menu.vue';
 
 export default {
   name: 'App',
   components: {
+    Menu,
     PaletteTool,
     StatusBar,
     Palette,

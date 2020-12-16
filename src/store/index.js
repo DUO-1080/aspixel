@@ -6,6 +6,7 @@ export default createStore({
   state: {
     currentColor: '#ED7440',
     currentPalette: palettes[0],
+    canvasName: 'aspixel-1',
     zoom: 1,
     point: {
       x: undefined,
@@ -32,27 +33,44 @@ export default createStore({
         state.currentPalette = [...state.currentPalette, color];
       }
     },
+
+    // useless, should setup in init
     initPalette: (state, palette) => {
       state.currentPalette = palette;
     },
+
+    // setup canvas init property
+    init: (state, init) => {
+      state.canvasSpec = init.canvasSpec;
+      state.currentPalette = init.palette;
+      state.canvasName = init.name;
+    },
+
     setPalette: (state, palette) => {
       state.currentPalette = palette;
     },
+
     setZoom: (state, zoom) => {
       state.zoom = zoom;
     },
+
     setPoint: (state, point) => {
       state.point = point;
     },
+
+    // useless, should setup in init
     setCanvasSpec: (state, canvasSpec) => {
       state.canvasSpec = canvasSpec;
     },
+
     setHoverPalette: (state, hover) => {
       state.hoverPalette = hover;
     },
+
     setPaletteSize: (state, size) => {
       state.paletteSize = size;
-    }
+    },
+
   },
   actions: {},
   modules: {},
