@@ -20,16 +20,22 @@
         </div>
       </ModalContainer>
     </div>
+    <div title="Fullscreen" @click="handleFullScreen"
+         class="border border-black rounded-sm p-0.5 bg-gray-300 cursor-pointer">
+      <img class="w-5 h-5 bg-gray-400 hover:bg-transparent" :src="fullscreenIcon" alt="">
+    </div>
   </div>
 </template>
 
 <script>
 import downloadIcon from '../assets/download.svg';
-import ModalContainer from './ModalContainer.vue';
-import {ref} from 'vue';
+import fullscreenIcon from '../assets/full-screen.svg';
 import canvasToImage from 'canvas-to-image';
-import {useStore} from 'vuex';
+import ModalContainer from './ModalContainer.vue';
 import FileSaver from 'file-saver';
+import screenfull from 'screenfull';
+import {ref} from 'vue';
+import {useStore} from 'vuex';
 
 export default {
   name: 'Menu',
@@ -79,14 +85,20 @@ export default {
 
     };
 
+    const handleFullScreen = () => {
+      screenfull.toggle();
+    }
+
     return {
       downloadIcon,
+      fullscreenIcon,
       isOpenSaveMenu,
       openSaveMenu,
       closeSaveMenu,
       modalPosition,
       saveToImage,
       saveToJson,
+      handleFullScreen
     };
   },
 };

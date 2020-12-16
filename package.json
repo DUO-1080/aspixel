@@ -9,6 +9,7 @@
     "@simonwep/pickr": "^1.8.0",
     "canvas-to-image": "^2.2.0",
     "file-saver": "^2.0.5",
+    "screenfull": "^5.0.2",
     "vue": "^3.0.4",
     "vuex": "^4.0.0-rc.2"
   },
