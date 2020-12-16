@@ -5,7 +5,7 @@ import PaletteSize from '../static/PaletteSize';
 export default createStore({
   state: {
     currentColor: '#ED7440',
-    currentPalette: palettes[0].colors,
+    currentPalette: palettes[0],
     zoom: 1,
     point: {
       x: undefined,
@@ -26,13 +26,16 @@ export default createStore({
     setColor: (state, color) => {
       state.currentColor = color;
     },
-    setPalette: (state, color) => {
+    addColorToPalette: (state, color) => {
       if (!state.currentPalette.some(
           item => item === color)) {
         state.currentPalette = [...state.currentPalette, color];
       }
     },
     initPalette: (state, palette) => {
+      state.currentPalette = palette;
+    },
+    setPalette: (state, palette) => {
       state.currentPalette = palette;
     },
     setZoom: (state, zoom) => {

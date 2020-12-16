@@ -25,9 +25,16 @@
     </div>
     <div title="Presets" @click="openPresets" class="border border-black rounded-sm p-0.5 bg-gray-300 cursor-pointer">
       <img class="w-5 h-5 bg-gray-400 hover:bg-transparent " :src="presetsIcon" alt="">
+      <ModalContainer :open="isOpenPresets" @close="closePresets">
+        <div :style="{top: `${modalPosition.y + 4}px`, left: `${modalPosition.x}px`}"
+             class="absolute w-auto border border-black bg-gray-100 p-0.5 cursor-pointer">
+          <div class="bg-gray-300 py-1">
+            <PresetPaletteList />
+          </div>
+        </div>
+      </ModalContainer>
     </div>
 
-    <ModalContainer :open="isOpenPresets" @close="closePresets">presets</ModalContainer>
   </div>
 </template>
 
@@ -38,10 +45,11 @@ import ModalContainer from './ModalContainer.vue';
 import PaletteSize from '../static/PaletteSize';
 import {computed, ref} from 'vue';
 import {useStore} from 'vuex';
+import PresetPaletteList from './PresetPaletteList.vue';
 
 export default {
   name: 'PaletteTool',
-  components: {ModalContainer},
+  components: {PresetPaletteList, ModalContainer},
   setup() {
     const store = useStore();
     const isOpenPresets = ref(false);

@@ -53,7 +53,7 @@ export default {
 
       pickr.on('save', (color, instance) => {
         console.log('Event: "save"', color.toHEXA().toString().toLowerCase(), instance);
-        store.commit('setPalette', color.toHEXA().toString().toLowerCase())
+        store.commit('addColorToPalette', color.toHEXA().toString().toLowerCase())
       }).on('changestop', (source, instance) => {
         console.log('Event: "changestop"', instance._color.toHEXA().toString().toLowerCase());
         store.commit('setColor', instance._color.toHEXA().toString().toLowerCase());

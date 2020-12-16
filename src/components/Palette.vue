@@ -26,7 +26,7 @@ export default {
   props: {},
   setup(props) {
     const store = useStore();
-    const currentPalette = computed(() => store.state.currentPalette);
+    const currentPalette = computed(() => store.state.currentPalette.colors);
     const currentColor = computed(() => store.state.currentColor);
     const paletteSize = computed(() => store.state.paletteSize);
 

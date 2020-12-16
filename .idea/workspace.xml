@@ -2,13 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ef3198d1-6e89-49b9-b25d-167292b04f27" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/ModalContainer.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/PaletteTool.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/static/PaletteSize.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ColorPicker.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ColorPicker.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Palette.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Palette.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PaletteTool.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PaletteTool.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
