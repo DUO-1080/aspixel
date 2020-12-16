@@ -1,5 +1,6 @@
 import {createStore} from 'vuex';
 import palettes from '../assets/PresetPalettes';
+import PaletteSize from '../static/PaletteSize';
 
 export default createStore({
   state: {
@@ -17,7 +18,9 @@ export default createStore({
     hoverPalette: {
       color: undefined,
       index: undefined,
-    }
+    },
+    // small, medium, large
+    paletteSize: PaletteSize.medium,
   },
   mutations: {
     setColor: (state, color) => {
@@ -43,6 +46,9 @@ export default createStore({
     },
     setHoverPalette: (state, hover) => {
       state.hoverPalette = hover;
+    },
+    setPaletteSize: (state, size) => {
+      state.paletteSize = size;
     }
   },
   actions: {},

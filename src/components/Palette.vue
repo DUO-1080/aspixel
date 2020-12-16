@@ -2,9 +2,10 @@
   <div class="flex-grow w-full bg-indigo-900 border border-black mb-3 shadow-inner rounded-sm"
        style="background-color: #655561">
     <div class="flex flex-wrap">
-      <div class="palette-item w-9 h-9 relative cursor-pointer border border-black"
+      <div class="palette-item  relative cursor-pointer border border-black"
            v-for="(color, index) in currentPalette"
-           :style="{backgroundColor: color}" @mousemove="handleHover(color, index)" @mouseleave="handleLeave"
+           :style="{backgroundColor: color, width: `${width}rem`, height: `${height}rem` }"
+           @mousemove="handleHover(color, index)" @mouseleave="handleLeave"
            :key="color" @click="setCurrentColor(color)">
         <div v-if="currentColor.toLowerCase() === color"
              class="selected-cover">
@@ -16,8 +17,9 @@
 </template>
 
 <script>
-import {computed} from 'vue';
+import {computed, ref, watch} from 'vue';
 import {useStore} from 'vuex';
+import PaletteSize from '../static/PaletteSize';
 
 export default {
   name: 'Palette',
@@ -26,10 +28,25 @@ export default {
     const store = useStore();
     const currentPalette = computed(() => store.state.currentPalette);
     const currentColor = computed(() => store.state.currentColor);
+    const paletteSize = computed(() => store.state.paletteSize);
 
     const setCurrentColor = (color) => {
       store.commit('setColor', color);
     };
+    const width = ref(2);
+    const height = ref(2);
+    watch(paletteSize, (newSize) => {
+      if (newSize === PaletteSize.small) {
+        width.value = 1.5;
+        height.value = 1.5;
+      } else if (newSize === PaletteSize.medium) {
+        width.value = 2;
+        height.value = 2;
+      } else if (newSize === PaletteSize.large) {
+        width.value = 2.6;
+        height.value = 2.6;
+      }
+    });
 
     const handleHover = (color, index) => {
       store.commit('setHoverPalette', {color, index});
@@ -41,7 +58,10 @@ export default {
       currentPalette,
       setCurrentColor,
       handleHover,
-      handleLeave
+      handleLeave,
+      paletteSize,
+      width,
+      height,
     };
   },
 };
