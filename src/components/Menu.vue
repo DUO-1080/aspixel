@@ -1,53 +1,59 @@
 <template>
-  <div class="flex justify-end mx-3 flex-nowrap flex-grow items-center">
-    <div title="Save" @click="openSaveMenu"
-         class="border border-black rounded-sm p-0.5 bg-gray-300  mr-1 cursor-pointer">
-      <img class="w-5 h-5 bg-gray-400 hover:bg-transparent" :src="downloadIcon" alt="">
-      <ModalContainer :open="isOpenSaveMenu" @close="closeSaveMenu">
-        <div :style="{top: `${modalPosition.y + 7}px`, left: `calc(${modalPosition.x}px - 10rem)`}"
-             class="absolute w-40 border border-black bg-gray-100 p-0.5 cursor-pointer">
-          <div class="bg-gray-300 py-0.5">
-            <div class="menu-item px-3 h-8 leading-8" @click="saveToJson">
-              Save to local file
-            </div>
-            <div class="menu-item px-3 h-8 leading-8" @click="saveToImage('png')">
-              Save to png
-            </div>
-            <div class="menu-item px-3 h-8 leading-8" @click="saveToImage('jpg')">
-              Save to jpg
+  <div class="flex justify-between mr-3 flex-nowrap flex-grow items-center">
+    <div class="">
+      <img class="w-28" :src="logoIcon" alt="">
+    </div>
+    <div class="flex ">
+      <div title="Save" @click="openSaveMenu"
+           class="border border-black rounded-sm p-0.5 bg-gray-300  mr-1 cursor-pointer">
+        <img class="w-5 h-5 bg-gray-400 hover:bg-transparent" :src="downloadIcon" alt="">
+        <ModalContainer :open="isOpenSaveMenu" @close="closeSaveMenu">
+          <div :style="{top: `${modalPosition.y + 7}px`, left: `calc(${modalPosition.x}px - 10rem)`}"
+               class="absolute w-40 border border-black bg-gray-100 p-0.5 cursor-pointer">
+            <div class="bg-gray-300 py-0.5">
+              <div class="menu-item px-3 h-8 leading-8" @click="saveToJson">
+                Save to local file
+              </div>
+              <div class="menu-item px-3 h-8 leading-8" @click="saveToImage('png')">
+                Save to png
+              </div>
+              <div class="menu-item px-3 h-8 leading-8" @click="saveToImage('jpg')">
+                Save to jpg
+              </div>
             </div>
           </div>
-        </div>
-      </ModalContainer>
-    </div>
-    <div title="Fullscreen" @click="handleFullScreen"
-         class="border border-black rounded-sm p-0.5 bg-gray-300 mr-1 cursor-pointer">
-      <img class="w-5 h-5 bg-gray-400 hover:bg-transparent" :src="fullscreenIcon" alt="">
-    </div>
-    <div title="File" class="border border-black rounded-sm p-0.5 bg-gray-300 cursor-pointer" @click="openFileMenu">
-      <img class="w-5 h-5 bg-gray-400 hover:bg-transparent" :src="fileIcon" alt="">
-      <ModalContainer :open="isOpenFileMenu" @close="closeFileMenu" >
-        <div :style="{top: `${modalPosition.y + 7}px`, left: `calc(${modalPosition.x}px - 15rem)`}"
-             class="absolute w-60 border border-black bg-gray-100 p-0.5 cursor-pointer">
-          <div class="bg-gray-300 py-0.5">
-            <div class="menu-item px-3 h-8 leading-8">
-              <label for="localFile" class="file cursor-pointer w-full inline-block">Load from File(.aspixel)</label>
-              <input ref="localFile" class="file" id="localFile" @change="loadFromFile" hidden type="file" accept=".aspixel" />
-            </div>
-            <div class="menu-item px-3 h-8 leading-8" @click="openCreateCanvasDialog">
-              Create new Canvas
+        </ModalContainer>
+      </div>
+      <div title="Fullscreen" @click="handleFullScreen"
+           class="border border-black rounded-sm p-0.5 bg-gray-300 mr-1 cursor-pointer">
+        <img class="w-5 h-5 bg-gray-400 hover:bg-transparent" :src="fullscreenIcon" alt="">
+      </div>
+      <div title="File" class="border border-black rounded-sm p-0.5 bg-gray-300 cursor-pointer" @click="openFileMenu">
+        <img class="w-5 h-5 bg-gray-400 hover:bg-transparent" :src="fileIcon" alt="">
+        <ModalContainer :open="isOpenFileMenu" @close="closeFileMenu" >
+          <div :style="{top: `${modalPosition.y + 7}px`, left: `calc(${modalPosition.x}px - 15rem)`}"
+               class="absolute w-60 border border-black bg-gray-100 p-0.5 cursor-pointer">
+            <div class="bg-gray-300 py-0.5">
+              <div class="menu-item px-3 h-8 leading-8">
+                <label for="localFile" class="file cursor-pointer w-full inline-block">Load from File(.aspixel)</label>
+                <input ref="localFile" class="file" id="localFile" @change="loadFromFile" hidden type="file" accept=".aspixel" />
+              </div>
+              <div class="menu-item px-3 h-8 leading-8" @click="openCreateCanvasDialog">
+                Create new Canvas
+              </div>
             </div>
           </div>
-        </div>
+        </ModalContainer>
+      </div>
+      <ModalContainer bg="rgba(255,255,255,.6)" :open="isOpenCreateCanvasDialog">
+        <CreateCanvas @closeDialog="closeCreateCanvasDialog" />
       </ModalContainer>
     </div>
-    <ModalContainer bg="rgba(255,255,255,.6)" :open="isOpenCreateCanvasDialog">
-      <CreateCanvas @closeDialog="closeCreateCanvasDialog" />
-    </ModalContainer>
   </div>
 </template>
 
 <script>
+import logoIcon from '../assets/logo.svg';
 import downloadIcon from '../assets/download.svg';
 import fullscreenIcon from '../assets/full-screen.svg';
 import fileIcon from '../assets/file.svg';
@@ -167,6 +173,7 @@ export default {
 
     return {
       localFile,
+      logoIcon,
       downloadIcon,
       fullscreenIcon,
       fileIcon,

@@ -19,6 +19,9 @@
         <span class="text-lg ">{{ hoverPalette.color }} </span>
       </div>
 
+      <div v-else class="ml-4 flex items-center mr-6">
+          <div class="text-lg">{{ canvasName }}</div>
+      </div>
 
 
     </div>
@@ -42,6 +45,7 @@ export default {
       point: computed(() => store.state.point),
       canvasSpec: computed(() => store.state.canvasSpec),
       hoverPalette: computed(() => store.state.hoverPalette),
+      canvasName: computed(() => store.state.canvasName),
       pointIcon,
       squareIcon,
     };

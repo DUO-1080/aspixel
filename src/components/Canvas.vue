@@ -43,6 +43,7 @@ export default {
       drawBg();
       initCanvas();
       window.addEventListener('resize', measure);
+      document.title = `ASPIXEL | ${store.state.canvasName}`;
     });
 
     onUnmounted(() => {
