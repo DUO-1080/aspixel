@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ef3198d1-6e89-49b9-b25d-167292b04f27" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/CreateCanvas.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/static/CanvasBg.js" afterDir="false" />
+    <list default="true" id="ef3198d1-6e89-49b9-b25d-167292b04f27" name="Default Changelist" comment="✨ file relate: load from file(.aspixel) and setup new canvas detail.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/download.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/download.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/full-screen.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/full-screen.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Canvas.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Canvas.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Menu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Menu.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ModalContainer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ModalContainer.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,6 +67,14 @@
       <workItem from="1607843628112" duration="31286000" />
       <workItem from="1607950362723" duration="21697000" />
     </task>
+    <task id="LOCAL-00001" summary="✨ file relate: load from file(.aspixel) and setup new canvas detail.">
+      <created>1608188828395</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1608188828395</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -90,6 +90,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="✨ file relate: load from file(.aspixel) and setup new canvas detail." />
+    <option name="LAST_COMMIT_MESSAGE" value="✨ file relate: load from file(.aspixel) and setup new canvas detail." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

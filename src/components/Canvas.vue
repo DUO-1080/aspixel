@@ -14,7 +14,7 @@
 
 <script>
 
-import {computed, onMounted, ref, watch} from 'vue';
+import {computed, onMounted,onUnmounted, ref, watch} from 'vue';
 import {useStore} from 'vuex';
 import CanvasBg from '../static/CanvasBg';
 
@@ -38,11 +38,16 @@ export default {
 
     onMounted(() => {
       console.log('canvas mounted: init now.',backgroundRef.value, canvasRef.value);
-      measure(canvasSpec.w, canvasSpec.h);
+      measure();
       setupCanvas();
       drawBg();
-      initCanvas()
+      initCanvas();
+      window.addEventListener('resize', measure);
     });
+
+    onUnmounted(() => {
+      window.removeEventListener('resize', measure);
+    })
 
     const shouldRefresh = computed(() => store.state.shouldRefresh);
 
@@ -106,16 +111,19 @@ export default {
       canvasContext.fillRect(0, 0, canvasSpec.w, canvasSpec.h);
     }
 
-    function measure(w, h) {
+    function measure() {
+      console.log('measure canvas');
+      const w = canvasSpec.w;
+      const h = canvasSpec.h;
       const parent = containerRef.value.parentNode;
       const pr = parent.clientWidth / parent.clientHeight;
       const cr = w / h;
       let initW, initH;
       console.log('pr: ', pr, 'cr: ', cr);
-      if (pr > 1 && cr > 1 || pr <= 1 && cr > 1) {
+      if (pr >= 1 && cr > 1 || pr < 1 && cr >= 1) {
         initW = parent.clientWidth;
         initH = (initW / w) * h;
-      } else if (pr <= 1 && cr <= 1 || pr > 1 && cr <= 1) {
+      } else if (pr <= 1 && cr < 1 || pr > 1 && cr <= 1) {
         initH = parent.clientHeight;
         initW = (initH / h) * w;
       }
