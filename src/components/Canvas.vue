@@ -1,12 +1,14 @@
 <template>
   <div id="container" ref="container" @wheel.prevent="handleZoom"
-       class="canvas-display canvas-container border  border-black relative h-full w-full mx-auto" >
+       class="canvas-display canvas-container border  border-black relative h-full w-full mx-auto">
     <canvas id="background" ref="backgroundRef"
             class="canvas_display absolute top-0 left-0 w-full h-full z-10"></canvas>
     <canvas id="canvas" ref="canvasRef"
             class="canvas_display absolute top-0 left-0 w-full h-full z-20"></canvas>
     <canvas id="foreground" ref="foregroundRef"
-            class="canvas_display absolute top-0 left-0 w-full h-full z-30" @mousemove="handleHover"
+            class="canvas_display absolute top-0 left-0 w-full h-full z-30"
+            @contextmenu.prevent=""
+            @mousemove="handleHover"
             @mousedown="handleDraw"
             @mouseleave="handleMouseLeave"></canvas>
   </div>
@@ -14,7 +16,7 @@
 
 <script>
 
-import {computed, onMounted,onUnmounted, ref, watch} from 'vue';
+import {computed, onMounted, onUnmounted, ref, watch} from 'vue';
 import {useStore} from 'vuex';
 import CanvasBg from '../static/CanvasBg';
 
@@ -37,7 +39,7 @@ export default {
     let zoom = computed(() => store.state.zoom);
 
     onMounted(() => {
-      console.log('canvas mounted: init now.',backgroundRef.value, canvasRef.value);
+      console.log('canvas mounted: init now.', backgroundRef.value, canvasRef.value);
       measure();
       setupCanvas();
       drawBg();
@@ -48,7 +50,7 @@ export default {
 
     onUnmounted(() => {
       window.removeEventListener('resize', measure);
-    })
+    });
 
     const shouldRefresh = computed(() => store.state.shouldRefresh);
 
@@ -56,9 +58,9 @@ export default {
       if (s === true) {
         console.log('canvas should refresh');
         store.commit('refreshedCanvas');
-        context.emit('refreshCanvas', store.state.canvasName)
+        context.emit('refreshCanvas', store.state.canvasName);
       }
-    })
+    });
 
     watch([lastX, lastY], ([x, y], [preX, preY]) => {
       const context = foregroundRef.value.getContext('2d');
@@ -88,7 +90,7 @@ export default {
       const h = canvasSpec.h;
       for (let i = 0; i < w; i += 1) {
         for (let j = 0; j < h; j += 1) {
-          if ((i + j) % 2 === 0) {
+          if ((Math.floor(i / 16) + Math.floor(j / 16)) % 2 === 0) {
             context.fillStyle = '#808080';
           } else {
             context.fillStyle = '#c0c0c0';
@@ -107,7 +109,7 @@ export default {
         img.onload = () => {
           console.log('image data load');
           canvasContext.drawImage(img, 0, 0);
-        }
+        };
         img.src = canvasData;
       } else {
         const canvasBg = store.state.canvasBg;
@@ -140,15 +142,15 @@ export default {
       }
 
       pixelLength = initW / w;
-      console.log('measure pixelLength: ' ,pixelLength);
+      console.log('measure pixelLength: ', pixelLength);
 
       containerRef.value.style.width = initW + 'px';
       containerRef.value.style.height = initH + 'px';
     }
 
     function handleHover(e) {
-      if (e.buttons === 1) {
-        handleDraw();
+      if (e.buttons === 1 || e.buttons === 2) {
+        handleDraw(e);
       }
       let x = e.clientX;
       let y = e.clientY;
@@ -167,10 +169,15 @@ export default {
       store.commit('setPoint', {x: undefined, y: undefined});
     }
 
-    function handleDraw() {
+    function handleDraw(e) {
       const context = canvasRef.value.getContext('2d');
-      context.fillStyle = store.state.currentColor;
-      context.fillRect(lastX.value, lastY.value, 1, 1);
+
+      if (e.buttons === 1) {
+        context.fillStyle = store.state.currentColor;
+        context.fillRect(lastX.value, lastY.value, 1, 1);
+      } else if (e.buttons === 2) {
+        context.clearRect(lastX.value, lastY.value, 1, 1);
+      }
     }
 
     function handleZoom(e) {
@@ -183,7 +190,7 @@ export default {
       }
 
       store.commit('setZoom', z);
-      console.log('zoom',z, pixelLength, canvasSpec);
+      console.log('zoom', z, pixelLength, canvasSpec);
       container.style.height = `${pixelLength * canvasSpec.h * z}px`;
       container.style.width = `${pixelLength * canvasSpec.w * z}px`;
 
