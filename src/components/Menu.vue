@@ -145,16 +145,6 @@ export default {
         const data = JSON.parse(e.target.result);
         console.log('data: ',  data);
         store.commit('restoreFromFile', data)
-        const canvas = document.getElementById('canvas');
-        let context = canvas.getContext('2d');
-        const img = new Image();
-        img.onload = () => {
-          canvas.width = img.width;
-          canvas.height = img.height;
-          context.drawImage(img, 0, 0);
-          closeFileMenu();
-        }
-        img.src = data.data;
       }
       fileReader.readAsText(file)
     }

@@ -9,6 +9,7 @@ export default createStore({
     currentPalette: palettes[0],
     canvasName: 'aspixel-1',
     canvasBg: CanvasBg.TRANSPARENT,
+    canvasData: null,
     zoom: 1,
     point: {
       x: undefined,
@@ -82,6 +83,9 @@ export default createStore({
       state.canvasSpec = object.canvasSpec;
       state.paletteSize = object.paletteSize;
       state.canvasBg = object.canvasBg;
+      state.canvasName = object.canvasName;
+      state.canvasData = object.data;
+      state.shouldRefresh = true;
     },
 
     refreshedCanvas: state => {

@@ -100,16 +100,26 @@ export default {
     }
 
     function initCanvas() {
-      const canvasBg = store.state.canvasBg;
+      const canvasData = store.state.canvasData;
       const canvasContext = canvasRef.value.getContext('2d');
-      if (canvasBg === CanvasBg.WHITE) {
-        canvasContext.fillStyle = 'white';
-      } else if (canvasBg === CanvasBg.BLACK) {
-        canvasContext.fillStyle = 'black';
+      if (canvasData) {
+        const img = new Image();
+        img.onload = () => {
+          console.log('image data load');
+          canvasContext.drawImage(img, 0, 0);
+        }
+        img.src = canvasData;
       } else {
-        canvasContext.fillStyle = 'transparent';
+        const canvasBg = store.state.canvasBg;
+        if (canvasBg === CanvasBg.WHITE) {
+          canvasContext.fillStyle = 'white';
+        } else if (canvasBg === CanvasBg.BLACK) {
+          canvasContext.fillStyle = 'black';
+        } else {
+          canvasContext.fillStyle = 'transparent';
+        }
+        canvasContext.fillRect(0, 0, canvasSpec.w, canvasSpec.h);
       }
-      canvasContext.fillRect(0, 0, canvasSpec.w, canvasSpec.h);
     }
 
     function measure() {
