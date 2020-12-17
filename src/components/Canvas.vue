@@ -1,6 +1,6 @@
 <template>
   <div id="container" ref="container" @wheel.prevent="handleZoom"
-       class="canvas-display canvas-container border border-black relative h-full w-full flex justify-center items-center  mx-auto">
+       class="canvas-display canvas-container border  border-black relative h-full w-full mx-auto" >
     <canvas id="background" ref="backgroundRef"
             class="canvas_display absolute top-0 left-0 w-full h-full z-10"></canvas>
     <canvas id="canvas" ref="canvasRef"
@@ -130,6 +130,7 @@ export default {
       }
 
       pixelLength = initW / w;
+      console.log('measure pixelLength: ' ,pixelLength);
 
       containerRef.value.style.width = initW + 'px';
       containerRef.value.style.height = initH + 'px';
@@ -146,7 +147,7 @@ export default {
       y -= rect.top;
       lastX.value = Math.floor(x / (pixelLength * (zoom.value)));
       lastY.value = Math.floor(y / (pixelLength * (zoom.value)));
-
+      console.log('hover pixelLength: ', pixelLength);
       store.commit('setPoint', {x: lastX.value, y: lastY.value});
     }
 
@@ -172,7 +173,7 @@ export default {
       }
 
       store.commit('setZoom', z);
-
+      console.log('zoom',z, pixelLength, canvasSpec);
       container.style.height = `${pixelLength * canvasSpec.h * z}px`;
       container.style.width = `${pixelLength * canvasSpec.w * z}px`;
 

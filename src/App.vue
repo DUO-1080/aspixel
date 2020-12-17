@@ -5,13 +5,14 @@
       <Menu/>
     </div>
     <div class="main flex flex-grow h-full">
-      <div class="w-80 flex flex-col mx-3">
+      <div class="w-40 md:w-60 lg:w-80 flex flex-col mx-3">
         <Palette/>
         <ColorPicker/>
       </div>
       <div class="canvas overflow-auto h-full border p-0.5 bg-white border-black rounded-sm"
            @wheel.prevent>
-        <div ref="right" class="h-full overflow-auto border border-black rounded-sm flex items-center justify-center" style="background-color: #655561">
+        <div ref="right" class="h-full overflow-auto border border-black rounded-sm"
+             style="background-color: #655561">
           <Canvas :key="canvasKey" @refreshCanvas="refreshCanvas" @handleZoom="handleZoom"/>
         </div>
       </div>
