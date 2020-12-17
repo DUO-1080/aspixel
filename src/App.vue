@@ -12,24 +12,26 @@
       <div class="canvas overflow-auto h-full border p-0.5 bg-white border-black rounded-sm"
            @wheel.prevent>
         <div ref="right" class="h-full overflow-auto border border-black rounded-sm" style="background-color: #655561">
-          <Canvas @handleZoom="handleZoom" :ch="32" :cw="32"/>
+          <Canvas :key="canvasKey" @refreshCanvas="refreshCanvas" @handleZoom="handleZoom"/>
         </div>
       </div>
     </div>
     <div class="w-full h-8">
       <StatusBar/>
     </div>
+
   </div>
 </template>
 
 <script>
 import Canvas from './components/Canvas.vue';
-import {ref} from 'vue';
+import {computed, ref} from 'vue';
 import ColorPicker from './components/ColorPicker.vue';
 import Palette from './components/Palette.vue';
 import StatusBar from './components/StatusBar.vue';
 import PaletteTool from './components/PaletteTool.vue';
 import Menu from './components/Menu.vue';
+import {useStore} from 'vuex';
 
 export default {
   name: 'App',
@@ -44,15 +46,22 @@ export default {
   setup() {
 
     const right = ref();
+    const canvasKey = ref('aspixel');
 
     function handleZoom(x, y) {
       right.value.scrollLeft = x;
       right.value.scrollTop = y;
     }
 
+    function refreshCanvas(name) {
+      canvasKey.value = `${name}-${new Date().getMilliseconds()}`;
+    }
+
     return {
       handleZoom,
+      refreshCanvas,
       right,
+      canvasKey,
     };
   },
 

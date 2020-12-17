@@ -21,17 +21,39 @@
       </ModalContainer>
     </div>
     <div title="Fullscreen" @click="handleFullScreen"
-         class="border border-black rounded-sm p-0.5 bg-gray-300 cursor-pointer">
+         class="border border-black rounded-sm p-0.5 bg-gray-300 mr-1 cursor-pointer">
       <img class="w-5 h-5 bg-gray-400 hover:bg-transparent" :src="fullscreenIcon" alt="">
     </div>
+    <div title="File" class="border border-black rounded-sm p-0.5 bg-gray-300 cursor-pointer" @click="openFileMenu">
+      <img class="w-5 h-5 bg-gray-400 hover:bg-transparent" :src="fileIcon" alt="">
+      <ModalContainer :open="isOpenFileMenu" @close="closeFileMenu" >
+        <div :style="{top: `${modalPosition.y + 7}px`, left: `calc(${modalPosition.x}px - 15rem)`}"
+             class="absolute w-60 border border-black bg-gray-100 p-0.5 cursor-pointer">
+          <div class="bg-gray-300 py-0.5">
+            <div class="menu-item px-3 h-8 leading-8">
+              <label for="localFile" class="file cursor-pointer w-full inline-block">Load from File(.aspixel)</label>
+              <input ref="localFile" class="file" id="localFile" @change="loadFromFile" hidden type="file" accept=".aspixel" />
+            </div>
+            <div class="menu-item px-3 h-8 leading-8" @click="openCreateCanvasDialog">
+              Create new Canvas
+            </div>
+          </div>
+        </div>
+      </ModalContainer>
+    </div>
+    <ModalContainer bg="rgba(255,255,255,.6)" :open="isOpenCreateCanvasDialog">
+      <CreateCanvas @closeDialog="closeCreateCanvasDialog" />
+    </ModalContainer>
   </div>
 </template>
 
 <script>
 import downloadIcon from '../assets/download.svg';
 import fullscreenIcon from '../assets/full-screen.svg';
+import fileIcon from '../assets/file.svg';
 import canvasToImage from 'canvas-to-image';
 import ModalContainer from './ModalContainer.vue';
+import CreateCanvas from './CreateCanvas.vue';
 import FileSaver from 'file-saver';
 import screenfull from 'screenfull';
 import {ref} from 'vue';
@@ -39,27 +61,47 @@ import {useStore} from 'vuex';
 
 export default {
   name: 'Menu',
-  components: {ModalContainer},
+  components: {CreateCanvas, ModalContainer},
   setup() {
     const store = useStore();
+    const localFile = ref();
     const isOpenSaveMenu = ref(false);
+    const isOpenFileMenu = ref(false);
+    const isOpenCreateCanvasDialog = ref(false);
     const modalPosition = ref({
       x: 0,
       y: 0,
     });
 
-    const openSaveMenu = (e) => {
+    function setupModalPosition(e) {
       const rect = e.currentTarget.getBoundingClientRect();
       console.log(e.currentTarget.getBoundingClientRect());
       modalPosition.value = {
         x: rect.right,
         y: rect.bottom,
       };
+    }
+
+    const openSaveMenu = (e) => {
+      setupModalPosition(e);
       isOpenSaveMenu.value = true;
     };
 
     const closeSaveMenu = () => {
       isOpenSaveMenu.value = false;
+    };
+
+    const openFileMenu = (e) => {
+      setupModalPosition(e);
+      isOpenFileMenu.value = true;
+    };
+
+    const closeFileMenu = (e) => {
+      console.log(e);
+      if (e && e.target.classList.contains('file')) {
+        return;
+      }
+      isOpenFileMenu.value = false;
     };
 
     const saveToImage = (type) => {
@@ -75,8 +117,7 @@ export default {
       const object = {
         ...store.state,
         data: document.getElementById('canvas').
-            getContext('2d').
-            getImageData(0, 0, store.state.canvasSpec.w, store.state.canvasSpec.h),
+            toDataURL(),
       };
       console.log(object.data);
 
@@ -87,18 +128,63 @@ export default {
 
     const handleFullScreen = () => {
       screenfull.toggle();
+    };
+
+    const loadFromFile = () => {
+      const file = localFile.value.files[0];
+      console.log(file);
+      const fileReader = new FileReader();
+
+      fileReader.onload = e => {
+        const data = JSON.parse(e.target.result);
+        console.log('data: ',  data);
+        store.commit('restoreFromFile', data)
+        const canvas = document.getElementById('canvas');
+        let context = canvas.getContext('2d');
+        const img = new Image();
+        img.onload = () => {
+          canvas.width = img.width;
+          canvas.height = img.height;
+          context.drawImage(img, 0, 0);
+          closeFileMenu();
+        }
+        img.src = data.data;
+      }
+      fileReader.readAsText(file)
+    }
+
+    const openCreateCanvasDialog = () => {
+      isOpenCreateCanvasDialog.value = true;
+    }
+
+    const closeCreateCanvasDialog = () => {
+      isOpenCreateCanvasDialog.value = false;
+    }
+
+    const newCanvas = () => {
+
     }
 
     return {
+      localFile,
       downloadIcon,
       fullscreenIcon,
+      fileIcon,
       isOpenSaveMenu,
+      isOpenFileMenu,
+      isOpenCreateCanvasDialog,
+      modalPosition,
       openSaveMenu,
       closeSaveMenu,
-      modalPosition,
+      openFileMenu,
+      closeFileMenu,
+      openCreateCanvasDialog,
+      closeCreateCanvasDialog,
       saveToImage,
       saveToJson,
-      handleFullScreen
+      handleFullScreen,
+      loadFromFile,
+      newCanvas,
     };
   },
 };

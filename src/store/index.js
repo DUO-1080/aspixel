@@ -1,12 +1,14 @@
 import {createStore} from 'vuex';
 import palettes from '../assets/PresetPalettes';
 import PaletteSize from '../static/PaletteSize';
+import CanvasBg from '../static/CanvasBg';
 
 export default createStore({
   state: {
     currentColor: '#ED7440',
     currentPalette: palettes[0],
     canvasName: 'aspixel-1',
+    canvasBg: CanvasBg.TRANSPARENT,
     zoom: 1,
     point: {
       x: undefined,
@@ -22,15 +24,17 @@ export default createStore({
     },
     // small, medium, large
     paletteSize: PaletteSize.medium,
+    shouldRefresh: false,
   },
   mutations: {
     setColor: (state, color) => {
       state.currentColor = color;
     },
     addColorToPalette: (state, color) => {
-      if (!state.currentPalette.some(
+      if (!state.currentPalette.colors.some(
           item => item === color)) {
-        state.currentPalette = [...state.currentPalette, color];
+        // state.currentPalette = [...state.currentPalette, color];
+        state.currentPalette.colors = [...state.currentPalette.colors, color];
       }
     },
 
@@ -42,8 +46,9 @@ export default createStore({
     // setup canvas init property
     init: (state, init) => {
       state.canvasSpec = init.canvasSpec;
-      state.currentPalette = init.palette;
       state.canvasName = init.name;
+      state.canvasBg = init.canvasBg;
+      state.shouldRefresh = true;
     },
 
     setPalette: (state, palette) => {
@@ -71,6 +76,17 @@ export default createStore({
       state.paletteSize = size;
     },
 
+    restoreFromFile: (state, object) => {
+      state.currentColor = object.currentColor;
+      state.currentPalette = object.currentPalette;
+      state.canvasSpec = object.canvasSpec;
+      state.paletteSize = object.paletteSize;
+      state.canvasBg = object.canvasBg;
+    },
+
+    refreshedCanvas: state => {
+      state.shouldRefresh = false;
+    }
   },
   actions: {},
   modules: {},

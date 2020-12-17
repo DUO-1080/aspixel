@@ -16,6 +16,7 @@
 
 import {computed, onMounted, ref, watch} from 'vue';
 import {useStore} from 'vuex';
+import CanvasBg from '../static/CanvasBg';
 
 export default {
   name: 'Canvas',
@@ -34,12 +35,24 @@ export default {
     let lastX = ref(0);
     let lastY = ref(0);
     let zoom = computed(() => store.state.zoom);
+
     onMounted(() => {
-      console.log(backgroundRef.value, canvasRef.value);
-      measure(props.cw, props.ch);
+      console.log('canvas mounted: init now.',backgroundRef.value, canvasRef.value);
+      measure(canvasSpec.w, canvasSpec.h);
       setupCanvas();
       drawBg();
+      initCanvas()
     });
+
+    const shouldRefresh = computed(() => store.state.shouldRefresh);
+
+    watch(shouldRefresh, (s) => {
+      if (s === true) {
+        console.log('canvas should refresh');
+        store.commit('refreshedCanvas');
+        context.emit('refreshCanvas', store.state.canvasName)
+      }
+    })
 
     watch([lastX, lastY], ([x, y], [preX, preY]) => {
       const context = foregroundRef.value.getContext('2d');
@@ -77,6 +90,20 @@ export default {
           context.fillRect(i, j, 1, 1);
         }
       }
+
+    }
+
+    function initCanvas() {
+      const canvasBg = store.state.canvasBg;
+      const canvasContext = canvasRef.value.getContext('2d');
+      if (canvasBg === CanvasBg.WHITE) {
+        canvasContext.fillStyle = 'white';
+      } else if (canvasBg === CanvasBg.BLACK) {
+        canvasContext.fillStyle = 'black';
+      } else {
+        canvasContext.fillStyle = 'transparent';
+      }
+      canvasContext.fillRect(0, 0, canvasSpec.w, canvasSpec.h);
     }
 
     function measure(w, h) {
