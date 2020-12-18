@@ -73,7 +73,7 @@ export default {
 }
 
 .selected-cover {
-  z-index: 100;
+  z-index: 10;
   border: 3px solid white;
   background-color: transparent;
   position: absolute;
