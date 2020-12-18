@@ -9,7 +9,7 @@
         <Palette/>
         <ColorPicker/>
       </div>
-      <div class="canvas overflow-auto h-full border p-0.5 bg-white border-black rounded-sm"
+      <div class="w-full overflow-auto h-full border p-0.5 bg-white border-black rounded-sm"
            @wheel.prevent>
         <div ref="right" class="h-full overflow-auto border border-black rounded-sm"
              style="background-color: #655561">
@@ -26,13 +26,12 @@
 
 <script>
 import Canvas from './components/Canvas.vue';
-import {computed, ref} from 'vue';
+import {ref} from 'vue';
 import ColorPicker from './components/ColorPicker.vue';
 import Palette from './components/Palette.vue';
 import StatusBar from './components/StatusBar.vue';
 import PaletteTool from './components/PaletteTool.vue';
 import Menu from './components/Menu.vue';
-import {useStore} from 'vuex';
 
 export default {
   name: 'App',
